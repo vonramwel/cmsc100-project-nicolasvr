@@ -1,6 +1,8 @@
 import Fastify from 'fastify';
-import { getDB, saveDB } from './utils/db/index.js';
-import { v4 } from 'uuid';
+import { general } from './services/general/index.js';
+import { createBlog } from './services/blogs/create-blog.js';
+import { getManyBlog } from './services/blogs/get-many-blogs.js';
+// import { getTodo } from './services/todos/get-todo.js';
 
 const prefix = '/api';
 
@@ -8,46 +10,16 @@ export async function build () {
   // initialize fastify
   const fastify = Fastify({ logger: true });
 
-  fastify.get('/api', async (request, reply) => {
-    return { success: true };
-  });
+  fastify.get(prefix, general);
 
-  // create blog
-  fastify.post(`${prefix}/blog`, async (request, reply) => {
-    const { body } = request;
-    const { title, description } = body;
-    const db = await getDB();
+  // create todo
+  fastify.post(`${prefix}/blog`, createBlog);
 
-    const id = v4();
+  // get many todo
+  fastify.get(`${prefix}/blog`, getManyBlog);
 
-    const blog = {
-      title,
-      description,
-      createdDate: new Date().getTime(),
-      editedDate: new Date().getTime(),
-      comments: {}
-    };
-
-    db.blogs[id] = blog;
-
-    await saveDB(db);
-
-    /**
-       * const newObj = {
-       *   id
-       * }
-       *
-       * for (const key in todo) {
-       *   newObj[key] = todo[key]
-       * }
-       *
-       * return newObj
-       */
-    return {
-      id,
-      ...blog
-    };
-  });
+  // get one todo
+  // fastify.get(`${prefix}/todo/:todoId`, getTodo);
 
   return fastify;
 }
