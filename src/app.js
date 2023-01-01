@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import { general } from './services/general/index.js';
 import { createBlog } from './services/blogs/create-blog.js';
 import { getManyBlog } from './services/blogs/get-many-blogs.js';
-// import { getTodo } from './services/todos/get-todo.js';
+import { getBlog } from './services/blogs/get-blog.js';
 
 const prefix = '/api';
 
@@ -12,14 +12,14 @@ export async function build () {
 
   fastify.get(prefix, general);
 
-  // create todo
+  // create blog
   fastify.post(`${prefix}/blog`, createBlog);
 
-  // get many todo
+  // get many blog
   fastify.get(`${prefix}/blog`, getManyBlog);
 
-  // get one todo
-  // fastify.get(`${prefix}/todo/:todoId`, getTodo);
+  // get one blog
+  fastify.get(`${prefix}/blog/:blogId`, getBlog);
 
   return fastify;
 }
