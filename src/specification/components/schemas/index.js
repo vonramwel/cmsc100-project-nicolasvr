@@ -50,5 +50,42 @@ export const schemas = {
         type: 'string'
       }
     }
+  },
+  NewUserObject: {
+    type: 'object',
+    properties: {
+      username: {
+        type: 'string'
+      },
+      password: {
+        type: 'string'
+      },
+      firstName: {
+        type: 'string'
+      },
+      lastName: {
+        type: 'string'
+      }
+    }
+  },
+  UserObject: {
+    type: 'object',
+    properties: {
+      username: {
+        type: 'string'
+      },
+      firstName: {
+        type: 'string'
+      },
+      lastName: {
+        type: 'string'
+      },
+      createdDate: {
+        type: 'number'
+      },
+      updatedDate: {
+        type: 'number'
+      }
+    }
   }
 };
