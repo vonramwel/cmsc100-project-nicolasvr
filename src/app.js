@@ -1,11 +1,10 @@
 import Fastify from 'fastify';
 import sensible from '@fastify/sensible';
-import { general } from './services/general/index.js';
-import { createBlog } from './services/blogs/create-blog.js';
-import { getManyBlog } from './services/blogs/get-many-blogs.js';
-import { getBlog } from './services/blogs/get-blog.js';
-import { updateBlog } from './services/blogs/update-blog.js';
-import { deleteBlog } from './services/blogs/delete-blog.js';
+import openAPIGlue from 'fastify-openapi-glue';
+import swagger from '@fastify/swagger';
+//import { Service } from './services/index.js';
+//import { specification } from './specification/index.js';
+
 
 const prefix = '/api';
 
@@ -14,22 +13,40 @@ export async function build () {
   const fastify = Fastify({ logger: true });
   fastify.register(sensible);
 
-  fastify.get(prefix, general);
+  const service = new Service();
 
-  // create blog
-  fastify.post(`${prefix}/blog`, createBlog);
+  const openAPIGlueOptions = {
+    //specification,
+    //service,
+    prefix
+  };
 
-  // get many blog
-  fastify.get(`${prefix}/blog`, getManyBlog);
+  const swaggerOptions = {
+   // openapi: specification,
+    //routePrefix: '/docs',
+    exposeRoute: true
+  };
 
-  // get one blog
-  fastify.get(`${prefix}/blog/:blogId`, getBlog);
+  fastify.register(swagger, swaggerOptions);
+  fastify.register(openAPIGlue, openAPIGlueOptions);
 
-  // update one blog
-  fastify.put(`${prefix}/blog/:blogId`, updateBlog);
 
-  // delete one blog
-  fastify.delete(`${prefix}/blog/:blogId`, deleteBlog);
+  // fastify.get(prefix, general);
+
+  // // create blog
+  // fastify.post(`${prefix}/blog`, createBlog);
+
+  // // get many blog
+  // fastify.get(`${prefix}/blog`, getManyBlog);
+
+  // // get one blog
+  // fastify.get(`${prefix}/blog/:blogId`, getBlog);
+
+  // // update one blog
+  // fastify.put(`${prefix}/blog/:blogId`, updateBlog);
+
+  // // delete one blog
+  // fastify.delete(`${prefix}/blog/:blogId`, deleteBlog);
 
   return fastify;
 }
