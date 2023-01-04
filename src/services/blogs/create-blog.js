@@ -8,11 +8,11 @@ export const createBlog = async (request, reply) => {
 
   const id = v4();
 
-    // check if there is username (meaning logged in)
-    if (!username) {
-      return reply.badRequest();
-    }
-  
+  // check if there is username (meaning logged in)
+  if (!username) {
+    return reply.badRequest();
+  }
+
   const blog = {
     title,
     description,

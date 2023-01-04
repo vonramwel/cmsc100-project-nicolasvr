@@ -4,12 +4,12 @@ export const updateBlog = async (request, reply) => {
   const { params, body, username } = request;
   const { blogId: id } = params;
   const { title, description } = body;
-  
-    // check if there is username (meaning logged in)
-    if (!username) {
-      return reply.badRequest();
-    }
-  
+
+  // check if there is username (meaning logged in)
+  if (!username) {
+    return reply.badRequest();
+  }
+
   const db = await getDB();
 
   if (db.blogs[id].username !== username) {

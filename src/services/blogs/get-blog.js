@@ -3,12 +3,12 @@ import { getDB } from '../../utils/db/index.js';
 export const getBlog = async (request, reply) => {
   const { params, username } = request;
   const { blogId: id } = params;
-  
-    // check if there is username (meaning logged in)
-    if (!username) {
-      return reply.badRequest();
-    }
-  
+
+  // check if there is username (meaning logged in)
+  if (!username) {
+    return reply.badRequest();
+  }
+
   const db = await getDB();
 
   const { blogs } = db;

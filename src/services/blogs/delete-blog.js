@@ -5,14 +5,14 @@ export const deleteBlog = async (request, reply) => {
   const { blogId: id } = params;
   const db = await getDB();
 
-    // check if there is username (meaning logged in)
-    if (!username) {
-      return reply.badRequest();
-    }
-  
-    if (db.blogs[id].username !== username) {
-      return reply.forbidden('You are not the owner of the blog');
-    }
+  // check if there is username (meaning logged in)
+  if (!username) {
+    return reply.badRequest();
+  }
+
+  if (db.blogs[id].username !== username) {
+    return reply.forbidden('You are not the owner of the blog');
+  }
 
   delete db.blogs[id];
 
