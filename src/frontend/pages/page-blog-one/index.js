@@ -14,9 +14,11 @@ class Page extends LitPage {
 
   @property({ type: String })
   errorMessage = ''
+
   render () {
     return template.bind(this)();
   }
+
   async updated (changedMap) {
     await super.updated(changedMap);
     if (changedMap.has('paramObject')) {
@@ -26,6 +28,7 @@ class Page extends LitPage {
       }
     }
   }
+
   async getBlog (id) {
     const response = await window.fetch(`/api/blog/${id}`);
     if (response.status !== 200) {
@@ -41,6 +44,7 @@ class Page extends LitPage {
       return this.setErrorMessage(error, 404);
     }
   }
+
   async updateBlog (event) {
     event.preventDefault();
     // we get the data from the detail being sent by the todo-component
@@ -63,7 +67,7 @@ class Page extends LitPage {
       return this.setErrorMessage(error, 404);
     }
   }
-  
+
   async setErrorMessage (data, status) {
     const { message, error } = data;
     this.errorMessage = `HTTP Code: ${status} - ${error} - ${message}`;
