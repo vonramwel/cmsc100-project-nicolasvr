@@ -1,5 +1,5 @@
 import tap from 'tap';
-import { build } from '../../src/app.js';
+import { build } from '../../../src/app.js';
 import 'must/register.js';
 import Chance from 'chance';
 
@@ -9,11 +9,13 @@ tap.mochaGlobals();
 
 const prefix = '/api';
 
-describe('Logging in a user should work', async () => {
+describe('Delete a blog should work', async () => {
   let app;
 
   before(async () => {
-    app = await build();
+    app = await build({
+      forceCloseConnections: true
+    });
   });
 
   const newUser = {
@@ -22,6 +24,8 @@ describe('Logging in a user should work', async () => {
     firstName: chance.first(),
     lastName: chance.last()
   };
+
+  let cookie = '';
 
   it('Should return the user that was created a new user', async () => {
     const response = await app.inject({
@@ -63,39 +67,55 @@ describe('Logging in a user should work', async () => {
 
     // this checks if HTTP status code is equal to 200
     response.statusCode.must.be.equal(200);
+
+    cookie = response.headers['set-cookie'];
   });
 
-  it('Login should return an error if username doesn\'t exist', async () => {
-    const response = await app.inject({
+  it('Should return the success = true if ID is deleted', async () => {
+    const newBlog = {
+      title: 'New Blog for get',
+      description: 'Some description'
+    };
+
+    const createResponse = await app.inject({
       method: 'POST',
-      url: `${prefix}/login`,
+      url: `${prefix}/blog`,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        cookie
       },
-      body: JSON.stringify({
-        username: 'test',
-        password: 'password'
-      })
+      body: JSON.stringify(newBlog)
+    });
+
+    const { id } = await createResponse.json();
+
+    const response = await app.inject({
+      method: 'DELETE',
+      headers: {
+        cookie
+      },
+      url: `${prefix}/blog/${id}`
     });
 
     // this checks if HTTP status code is equal to 200
-    response.statusCode.must.be.equal(401);
-  });
+    response.statusCode.must.be.equal(200);
 
-  it('Login should return an error if password is incorrect', async () => {
-    const response = await app.inject({
-      method: 'POST',
-      url: `${prefix}/login`,
+    const result = await response.json();
+
+    // expect success is true
+    result.success.must.be.true();
+
+    const getResponse = await app.inject({
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        cookie
       },
-      body: JSON.stringify({
-        username: newUser.username,
-        password: 'password'
-      })
+      url: `${prefix}/blog/${id}`
     });
 
-    // this checks if HTTP status code is equal to 200
-    response.statusCode.must.be.equal(401);
+    getResponse.statusCode.must.be.equal(404);
+  });
+  after(async () => {
+    await app.close();
   });
 });
