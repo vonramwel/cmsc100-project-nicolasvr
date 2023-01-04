@@ -3,9 +3,9 @@ import { html } from 'lit';
 export function template () {
   return html`<header>
     <h1>
-      Todo App
+      Blog App
     </h1>
-    
+
     <nav>
     ${this.loggedIn
       ? html`
