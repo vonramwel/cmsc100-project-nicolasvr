@@ -5,7 +5,7 @@ import swagger from '@fastify/swagger';
 import cookie from '@fastify/cookie';
 import session from '@fastify/secure-session';
 import jwt from '@fastify/jwt';
-import stat from `@fastify/static`
+import stat from '@fastify/static';
 import { Service } from './services/index.js';
 import { Security } from './security/index.js';
 import { specification } from './specification/index.js';
