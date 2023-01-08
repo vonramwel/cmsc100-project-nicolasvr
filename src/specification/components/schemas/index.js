@@ -68,7 +68,7 @@ export const schemas = {
   CommentRequestRequiredObject: {
     type: 'object',
     properties: {
-      message: {
+      data: {
         type: 'string'
       }
     },
@@ -80,7 +80,7 @@ export const schemas = {
   CommentRequestObject: {
     type: 'object',
     properties: {
-      message: {
+      data: {
         type: 'string'
       }
     }
