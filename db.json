@@ -6,8 +6,54 @@
       "lastName": "Nicolas",
       "createdDate": 1672671151592,
       "updatedDate": 1672671151592
+    },
+    "kujnu@example.com": {
+      "hashedPassword": "$2b$10$c7PI.zqTM0/sCf8ClaEISOk3wAf/ISGEjPKtCtxKqNyrPjJH5.I/u",
+      "firstName": "Peter",
+      "lastName": "Gilbert",
+      "createdDate": 1673177503162,
+      "updatedDate": 1673177503162
     }
   },
   "blogs": {
+    "259a59be-80c0-4e13-85b0-362cbcb899f4": {
+      "title": "New Blog",
+      "description": "Some description",
+      "username": "kujnu@example.com",
+      "createdDate": 1673177503239,
+      "editedDate": 1673177503239,
+      "comments": {
+        "beb179b8-0289-425c-8126-73f713813106": {
+          "data": "New comment",
+          "username": "ose@example.com",
+          "createdDate": 1673178016955,
+          "editedDate": 1673178016955
+        },
+        "6182b9dd-18f9-4cbe-afcd-fd281068c4a4": {
+          "data": "New comment",
+          "username": "eboj@example.com",
+          "createdDate": 1673179396136,
+          "editedDate": 1673179396136
+        },
+        "825add32-199a-406f-8fdf-61bfe756e1e2": {
+          "data": "comment 1",
+          "username": "ewuza@example.com",
+          "createdDate": 1673179397990,
+          "editedDate": 1673179397990
+        },
+        "780da0c7-68c3-48c5-a9cb-68e6b31bebc4": {
+          "data": "New comment",
+          "username": "wobu@example.com",
+          "createdDate": 1673179591839,
+          "editedDate": 1673179591839
+        },
+        "09053ffd-6234-4356-a650-aa1568bc1b95": {
+          "data": "comment 1",
+          "username": "mivliime@example.com",
+          "createdDate": 1673179593613,
+          "editedDate": 1673179593613
+        }
+      }
+    }
   }
 }
