@@ -32,24 +32,24 @@ export const routes = {
       () => import('./pages/page-login/index.js')
     ]
   },
-  '/todos': {
+  '/blogs': {
     render: () => html`
-      <page-todos></page-todos>
+      <page-blogs></page-blogs>
     `,
     // runs all scripts, if any one of the functions in the list fails
     preRender: [
       redirectIfLoggedOut,
-      () => import('./pages/page-todos/index.js')
+      () => import('./pages/page-blogs/index.js')
     ]
   },
-  '/todos/:id': {
+  '/blogs/:id': {
     render: () => html`
-      <page-todo-one .paramObject=${router.paramObject}></page-todo-one>
+      <page-blog-one .paramObject=${router.paramObject}></page-blog-one>
     `,
     // runs all scripts, if any one of the functions in the list fails
     preRender: [
       redirectIfLoggedOut,
-      () => import('./pages/page-todo-one/index.js')
+      () => import('./pages/page-blog-one/index.js')
     ]
   },
   '/logout': {
