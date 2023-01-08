@@ -3,7 +3,8 @@ import { v4 } from 'uuid';
 
 export const addComment = async (request, reply) => {
   const { params, body, username } = request;
-  const { title, description } = body;
+  const { data } = body;
+  const { blogId } = params;
   const db = await getDB();
 
   const id = v4();
@@ -20,7 +21,7 @@ export const addComment = async (request, reply) => {
     editedDate: new Date().getTime()
   };
 
-  db.blogs[id].comments = comment;
+  db.blogs[blogId].comments[id] = comment;
 
   await saveDB(db);
 
