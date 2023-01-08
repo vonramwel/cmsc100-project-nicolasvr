@@ -4,6 +4,9 @@ import { deleteBlog } from './blogs/delete-blog.js';
 import { getManyBlog } from './blogs/get-many-blogs.js';
 import { getBlog } from './blogs/get-blog.js';
 import { updateBlog } from './blogs/update-blog.js';
+import { addComment } from './comments/add-comment.js';
+import { updateComment } from './comments/update-comment.js';
+import { deleteComment } from './comments/delete-comment.js';
 import { registerUser } from './user/register-user.js';
 import { login } from './user/login.js';
 import { logout } from './user/logout.js';
@@ -20,6 +23,11 @@ export class Service {
   getManyBlog = getManyBlog
   getBlog = getBlog
   updateBlog = updateBlog
+
+  // comment functions
+  addComment = addComment
+  updateComment = updateComment
+  deleteComment = deleteComment
 
    // user functions
    registerUser = registerUser
