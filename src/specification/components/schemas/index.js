@@ -2,6 +2,9 @@ export const schemas = {
   BlogObject: {
     type: 'object',
     properties: {
+      username: {
+        type: 'string'
+      },
       id: {
         type: 'string'
       },
@@ -40,6 +43,49 @@ export const schemas = {
       'description'
     ]
   },
+
+  CommentObject: {
+    type: 'object',
+    properties: {
+      id: {
+        type: 'string'
+      },
+      data: {
+        type: 'string'
+      },
+      username: {
+        type: 'string'
+      },
+      createdDate: {
+        type: 'number'
+      },
+      editedDate: {
+        type: 'number'
+      }
+    }
+  },
+
+  CommentRequestRequiredObject: {
+    type: 'object',
+    properties: {
+      message: {
+        type: 'string'
+      }
+    },
+    required: [
+      'data'
+    ]
+  },
+
+  CommentRequestObject: {
+    type: 'object',
+    properties: {
+      message: {
+        type: 'string'
+      }
+    }
+  },
+
   BlogRequestObject: {
     type: 'object',
     properties: {
