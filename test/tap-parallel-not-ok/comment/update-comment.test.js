@@ -42,7 +42,7 @@ describe('Update a comment should work', async () => {
       body: JSON.stringify(newComment)
     });
 
-    // must be a bad request
+    // this checks if HTTP status code is equal to 401
     response.statusCode.must.be.equal(401);
   });
 
@@ -130,8 +130,8 @@ describe('Update a comment should work', async () => {
     result.data.must.be.equal(newerComment.data);
 
     // expect createdDate and updatedDate is not null
-    result.createdDate.must.be.equal(createdDate);
-    result.editedDate.must.be.above(editedDate);
+    result.createdDate.must.equal(createdDate);
+    result.editedDate.must.above(editedDate);
   });
 
   it('Logout should work', async () => {
@@ -146,6 +146,43 @@ describe('Update a comment should work', async () => {
 
     // this checks if HTTP status code is equal to 401
     response.statusCode.must.be.equal(200);
+  });
+
+  it('Login should work', async () => {
+    const response = await app.inject({
+      method: 'POST',
+      url: `${prefix}/login`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'vrnicolas',
+        password: 'hello'
+      })
+    });
+
+    // this checks if HTTP status code is equal to 200
+    response.statusCode.must.be.equal(200);
+
+    cookie = response.headers['set-cookie'];
+  });
+
+  it('it should return an error when the user is not yet logged in', async () => {
+    const newComment = {
+      data: 'comment'
+    };
+
+    const response = await app.inject({
+      method: 'PUT',
+      url: `${prefix}/blog/908a0cc2-0c92-46bd-ac4e-19fe1f5d548d/comment/08b7cad6-7f37-4783-9777-b90e385a9d1a`,
+      headers: {
+        'Content-Type': 'application/json',
+        cookie
+      },
+      body: JSON.stringify(newComment)
+    });
+
+    response.statusMessage.must.be.equal('Forbidden');
   });
 
   after(async () => {
