@@ -64,5 +64,61 @@ export const user = {
         }
       ]
     }
+  },
+  '/user/:userId': {
+   // '/change-password': {
+    put: {
+      summary: 'Change user password',
+      operationId: 'changePassword',
+      // parameters: [
+      //   {
+      //     $ref: '#/components/parameters/UserParameterId'
+      //   }
+      // ],
+      requestBody: {
+        description: 'THe request body for blog',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties:{
+                password:{
+                  type: 'string'
+                }
+              }
+            }
+          }
+        },
+        required: true
+      },
+      responses: {
+        200: {
+          description: 'Change user password',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  success:{
+                    type: 'boolean'
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      security: [
+        {
+          cookieAuth: []
+        }
+      ]
+    }
+
+   // }
+    
   }
+
+   
+
 };

@@ -8,7 +8,15 @@ export const parameters = {
       type: 'string'
     }
   },
-
+  UserParameterId: {
+    name: 'userId',
+    in: 'path',
+    required: true,
+    description: 'This is the id of the User',
+    schema: {
+      type: 'string'
+    }
+  },
   CommentParameterId: {
     name: 'commentId',
     in: 'path',

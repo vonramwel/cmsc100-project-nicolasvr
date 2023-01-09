@@ -11,6 +11,7 @@ import { registerUser } from './user/register-user.js';
 import { login } from './user/login.js';
 import { logout } from './user/logout.js';
 import { authCheck } from './user/auth-check.js';
+import { changePassword } from './user/change-password.js';
 
 export class Service {
   constructor (app) {
@@ -34,4 +35,5 @@ export class Service {
    login = login
    logout = logout
    authCheck = authCheck
+   changePassword = changePassword
 }
