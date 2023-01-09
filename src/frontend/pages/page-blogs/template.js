@@ -25,7 +25,7 @@ export function template () {
       `
       : ''}
     <div class="blog-list">
-      ${this.todos.map(blog => html`
+      ${this.blogs.map(blog => html`
         <div blogs="blog">
           <a href="/blogs/${blog.id}">
             ${blog.title}

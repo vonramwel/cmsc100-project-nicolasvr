@@ -134,6 +134,17 @@ export const schemas = {
       }
     }
   },
+  UserRequestRequiredObject: {
+    type: 'object',
+    properties: {
+      firstName: {
+        type: 'string'
+      },
+      lastName: {
+        type: 'string'
+      }
+    }
+  },
   LoginObject: {
     type: 'object',
     properties: {
