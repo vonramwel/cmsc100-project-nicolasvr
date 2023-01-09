@@ -67,7 +67,7 @@ export const user = {
   },
   '/user/:userId': {
    // '/change-password': {
-    put: {
+    post: {
       summary: 'Change user password',
       operationId: 'changePassword',
       // parameters: [
@@ -103,6 +103,69 @@ export const user = {
                     type: 'boolean'
                   }
                 }
+              }
+            }
+          }
+        }
+      },
+      security: [
+        {
+          cookieAuth: []
+        }
+      ]
+    },
+    get: {
+      summary: 'Get a user data',
+      operationId: 'seeUserData',
+      parameters: [
+        {
+          $ref: '#/components/parameters/UserParameterId'
+        }
+      ],
+      responses: {
+        200: {
+          description: 'A user object',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UserObject'
+              }
+            }
+          }
+        }
+      },
+      security: [
+        {
+          cookieAuth: []
+        }
+      ]
+    },
+    put: {
+      summary: 'Change user data',
+      operationId: 'changeUserData',
+      parameters: [
+        {
+          $ref: '#/components/parameters/UserParameterId'
+        }
+      ],
+      requestBody: {
+        description: 'THe request body for user',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/UserRequestRequiredObject'
+            }
+          }
+        },
+        required: true
+      },
+      responses: {
+        200: {
+          description: 'A user object',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UserObject'
               }
             }
           }

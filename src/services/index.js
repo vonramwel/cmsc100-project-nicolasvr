@@ -12,7 +12,8 @@ import { login } from './user/login.js';
 import { logout } from './user/logout.js';
 import { authCheck } from './user/auth-check.js';
 import { changePassword } from './user/change-password.js';
-
+import { seeUserData } from './user/see-user-data.js';
+import { changeUserData } from './user/change-user-data.js';
 export class Service {
   constructor (app) {
     this.app = app;
@@ -36,4 +37,6 @@ export class Service {
    logout = logout
    authCheck = authCheck
    changePassword = changePassword
+   seeUserData = seeUserData
+   changeUserData = changeUserData
 }
