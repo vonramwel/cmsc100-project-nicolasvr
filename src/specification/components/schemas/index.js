@@ -21,9 +21,26 @@ export const schemas = {
         type: 'number'
       },
       comments: {
-        type: 'object',
-        properties: {
-
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
+            },
+            data: {
+              type: 'string'
+            },
+            username: {
+              type: 'string'
+            },
+            createdDate: {
+              type: 'number'
+            },
+            editedDate: {
+              type: 'number'
+            }
+          }
         }
       }
     }
