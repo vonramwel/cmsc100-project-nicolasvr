@@ -2,7 +2,7 @@ import { getDB, saveDB } from '../../utils/db/index.js';
 
 export const changeUserData = async (request, reply) => {
   const { params, body, username } = request;
-  const {userId: id } = params;
+  const { userId: id } = params;
   const { firstName, lastName } = body;
 
   // check if there is username (meaning logged in)

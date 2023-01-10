@@ -21,6 +21,16 @@ export const getBlog = async (request, reply) => {
     return reply.forbidden('You are not the owner of the blog');
   }
 
+  const blogWithComments = Object
+    .entries(blogs[id].comments)
+    .map(function ([id, comment]) {
+      return {
+        id,
+        ...comment
+      };
+    });
+
+  blogs[id].comments = blogWithComments;
   return {
     id,
     ...blogs[id]

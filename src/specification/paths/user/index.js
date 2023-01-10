@@ -66,7 +66,7 @@ export const user = {
     }
   },
   '/user/:userId': {
-   // '/change-password': {
+    // '/change-password': {
     post: {
       summary: 'Change user password',
       operationId: 'changePassword',
@@ -81,8 +81,8 @@ export const user = {
           'application/json': {
             schema: {
               type: 'object',
-              properties:{
-                password:{
+              properties: {
+                password: {
                   type: 'string'
                 }
               }
@@ -99,7 +99,7 @@ export const user = {
               schema: {
                 type: 'object',
                 properties: {
-                  success:{
+                  success: {
                     type: 'boolean'
                   }
                 }
@@ -178,10 +178,8 @@ export const user = {
       ]
     }
 
-   // }
-    
-  }
+    // }
 
-   
+  }
 
 };
