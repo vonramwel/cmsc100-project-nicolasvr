@@ -13,7 +13,6 @@ export const seeUserData = async (request, reply) => {
 
   const { users } = db;
 
-
   return {
     username: userId,
     ...users[userId]
