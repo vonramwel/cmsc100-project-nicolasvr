@@ -50,9 +50,8 @@ class Page extends LitPage {
   }
 
   async editBlog (event) {
-   event.preventDefault();
-   this.edit = true;
-
+    event.preventDefault();
+    this.edit = true;
   }
 
   async deleteBlog (event) {
@@ -71,13 +70,12 @@ class Page extends LitPage {
         return this.setErrorMessage(await response.json(), response.status);
       } else {
         this.blog = await response.json();
-       changeUrl('/blogs');
+        changeUrl('/blogs');
       }
     } catch (error) {
       return this.setErrorMessage(error, 404);
     }
   }
-
 
   async updateBlog (event) {
     event.preventDefault();
@@ -96,7 +94,7 @@ class Page extends LitPage {
         return this.setErrorMessage(await response.json(), response.status);
       } else {
         this.blog = await response.json();
-       //changeUrl('/blogs');
+        // changeUrl('/blogs');
       }
     } catch (error) {
       return this.setErrorMessage(error, 404);
@@ -125,7 +123,6 @@ class Page extends LitPage {
   //     return this.setErrorMessage(error, 404);
   //   }
   // }
-
 
   async setErrorMessage (data, status) {
     const { message, error } = data;

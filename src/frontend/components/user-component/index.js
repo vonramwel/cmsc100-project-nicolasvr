@@ -20,7 +20,7 @@
 //     const { target: form } = event;
 
 //     const detail = {
-      
+
 //       firstName: form.firstName.value,
 //       lastName: form.lastName.value,
 //     };

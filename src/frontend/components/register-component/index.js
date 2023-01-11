@@ -51,7 +51,6 @@ class Component extends LitNoShadow {
 
     const { message, error } = await response.json();
     this.errorMessage = `HTTP Code: ${response.status} - ${error} - ${message}`;
-    // await state.set('user-is-logged-in', false);
   }
 }
 

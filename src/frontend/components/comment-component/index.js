@@ -12,7 +12,7 @@
 
 //   @property({ type: String })
 //   text = ''
-  
+
 //   render () {
 //     return template.bind(this)();
 //   }

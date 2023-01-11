@@ -89,7 +89,6 @@ describe('Delete a comment should work', async () => {
       },
       body: JSON.stringify(newComment)
     });
-    // console.log(await createResponse.json().id);
 
     const { id } = await createResponse.json();
 

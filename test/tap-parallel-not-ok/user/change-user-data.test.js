@@ -94,8 +94,6 @@ describe('change user data should work', async () => {
 
     result.firstName.must.be.equal(updatedUser.firstName);
     result.lastName.must.be.equal(updatedUser.lastName);
-    // expect createdDate and updatedDate is not null
-    // result.createdDate.must.equal(updatedUser.createdDate);
     result.updatedDate.must.above(result.createdDate);
   });
 
