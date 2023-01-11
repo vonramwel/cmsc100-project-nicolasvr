@@ -8,8 +8,6 @@ export const addComment = async (request, reply) => {
   const db = await getDB();
 
   const id = v4();
-  // message;
-
   // check if there is username (meaning logged in)
   if (!username) {
     return reply.badRequest();

@@ -52,22 +52,6 @@ describe('change password should work', async () => {
     result.updatedDate.must.not.be.null();
   });
 
-  //   it('should not allow user to change password when not logged in', async () => {
-  //     const createResponse = await app.inject({
-  //       method: 'PUT',
-  //       url: `${prefix}/user/vrnicolas`,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         cookie
-  //       },
-  //       body: JSON.stringify({
-  //         password: 'NewPass'
-  //       })
-  //     });
-
-  //     // this checks if HTTP status code is equal to 200
-  //     createResponse.statusCode.must.be.equal(401);
-  //   });
 
   it('Login should work', async () => {
     const response = await app.inject({
@@ -107,13 +91,8 @@ describe('change password should work', async () => {
     createResponse.statusCode.must.be.equal(200);
 
     const result = await createResponse.json();
-    // result.username.must.be.equal(newUser.username);
-    // result.firstName.must.be.equal(newUser.firstName);
-    // result.lastName.must.be.equal(newUser.lastName);
-    // // expect createdDate and updatedDate is not null
-    // result.createdDate.must.equal(newUser.createdDate);
+
     result.success.must.be.true();
-    // result.updatedDate.must.above(result.createdDate);
   });
 
   after(async () => {
