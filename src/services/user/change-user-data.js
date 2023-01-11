@@ -18,7 +18,7 @@ export const changeUserData = async (request, reply) => {
 
   db.users[id].firstName = firstName || db.users[id].firstName;
   db.users[id].lastName = lastName || db.users[id].lastName;
-  db.users[id].editedDate = new Date().getTime();
+  db.users[id].updatedDate = new Date().getTime();
 
   await saveDB(db);
 

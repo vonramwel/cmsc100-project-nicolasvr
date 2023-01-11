@@ -213,6 +213,58 @@ describe('Update a blog should work', async () => {
     result.editedDate.must.above(editedDate);
   });
 
+  it('Logout should work', async () => {
+    const response = await app.inject({
+      method: 'GET',
+      url: `${prefix}/logout`,
+      headers: {
+        'Content-Type': 'application/json',
+        cookie
+      }
+    });
+
+    // this checks if HTTP status code is equal to 200
+    response.statusCode.must.be.equal(200);
+  });
+
+  it('Login should work', async () => {
+    const response = await app.inject({
+      method: 'POST',
+      url: `${prefix}/login`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'vrnicolas',
+        password: 'hello'
+      })
+    });
+
+    // this checks if HTTP status code is equal to 200
+    response.statusCode.must.be.equal(200);
+
+    cookie = response.headers['set-cookie'];
+  });
+
+  it('it should not allow other user to change other user blog', async () => {
+    const newBlog = {
+      title: 'Blog',
+      description: 'Description'
+    };
+
+    const response = await app.inject({
+      method: 'PUT',
+      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4`,
+      headers: {
+        'Content-Type': 'application/json',
+        cookie
+      },
+      body: JSON.stringify(newBlog)
+    });
+
+    response.statusMessage.must.be.equal('Forbidden');
+  });
+
   after(async () => {
     await app.close();
   });

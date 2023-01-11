@@ -9,7 +9,7 @@ tap.mochaGlobals();
 
 const prefix = '/api';
 
-describe('Update a comment should work', async () => {
+describe('change user data should work', async () => {
   let app;
 
   before(async () => {
@@ -71,47 +71,32 @@ describe('Update a comment should work', async () => {
     cookie = response.headers['set-cookie'];
   });
 
-  it('Should update the object given an ID', async () => {
-    const newComment = {
-      data: 'comment'
-    };
-
-    const newerComment = {
-      data: 'comment 2'
+  it('Should update the user object given an ID', async () => {
+    const updatedUser = {
+      firstName: 'New First Name',
+      lastName: 'New Last Name'
     };
 
     const createResponse = await app.inject({
-      method: 'POST',
-      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment`,
-      headers: {
-        'Content-Type': 'application/json',
-        cookie
-      },
-      body: JSON.stringify(newComment)
-    });
-
-    const { id, createdDate, editedDate } = await createResponse.json();
-
-    const response = await app.inject({
       method: 'PUT',
-      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/${id}`,
+      url: `${prefix}/user/${newUser.username}`,
       headers: {
         'Content-Type': 'application/json',
         cookie
       },
-      body: JSON.stringify(newerComment)
+      body: JSON.stringify(updatedUser)
     });
 
     // this checks if HTTP status code is equal to 200
-    response.statusCode.must.be.equal(200);
+    createResponse.statusCode.must.be.equal(200);
 
-    const result = await response.json();
+    const result = await createResponse.json();
 
-    result.data.must.be.equal(newerComment.data);
-
-    // expect createdDate and editedDate is not null
-    result.createdDate.must.equal(createdDate);
-    result.editedDate.must.above(editedDate);
+    result.firstName.must.be.equal(updatedUser.firstName);
+    result.lastName.must.be.equal(updatedUser.lastName);
+    // expect createdDate and updatedDate is not null
+    // result.createdDate.must.equal(updatedUser.createdDate);
+    result.updatedDate.must.above(result.createdDate);
   });
 
   it('Logout should work', async () => {
@@ -140,29 +125,30 @@ describe('Update a comment should work', async () => {
         password: 'hello'
       })
     });
-
     // this checks if HTTP status code is equal to 200
     response.statusCode.must.be.equal(200);
 
     cookie = response.headers['set-cookie'];
   });
 
-  it('it should not allow other user to change other user comment', async () => {
-    const newComment = {
-      data: 'comment'
+  it('Should not allow other user change other user data', async () => {
+    const updatedUser = {
+      firstName: 'New First Name',
+      lastName: 'New Last Name'
     };
 
-    const response = await app.inject({
+    const createResponse = await app.inject({
       method: 'PUT',
-      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/beb179b8-0289-425c-8126-73f713813106`,
+      url: `${prefix}/user/${newUser.username}`,
       headers: {
         'Content-Type': 'application/json',
         cookie
       },
-      body: JSON.stringify(newComment)
+      body: JSON.stringify(updatedUser)
     });
 
-    response.statusMessage.must.be.equal('Forbidden');
+    // this checks if HTTP status code is equal to 200
+    createResponse.statusCode.must.be.equal(403);
   });
 
   after(async () => {
