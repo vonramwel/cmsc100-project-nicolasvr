@@ -61,5 +61,25 @@ export const routes = {
       redirectIfLoggedOut,
       () => import('./pages/page-logout/index.js')
     ]
+  },
+  '/register': {
+    render: () => html`
+      <page-register></page-register>
+    `,
+    // runs all scripts, if any one of the functions in the list fails
+    preRender: [
+      redirectIfLoggedIn,
+      () => import('./pages/page-register/index.js')
+    ]
+  },
+  '/getUser': {
+    render: () => html`
+      <page-users></page-users>
+    `,
+    // runs all scripts, if any one of the functions in the list fails
+    preRender: [
+      redirectIfLoggedOut,
+      () => import('./pages/page-users/index.js')
+    ]
   }
 };

@@ -9,7 +9,13 @@ export function template () {
     <nav>
     ${this.loggedIn
       ? html`
-        <a href="/logout">
+      <a href="/user">
+      Home
+      </a>
+      <a href="/user">
+        See User Data
+      </a>
+      <a href="/logout">
           Logout
         </a>
       `

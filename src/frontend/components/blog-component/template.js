@@ -31,7 +31,7 @@ export function template () {
       </div>
       <div class="label-input-group">
         <label for="description">
-          Text:
+          Description:
         </label>
         <input type="text" placeholder="description" id="description" name="description" value="${this.blog?.description}" required>
       </div>
