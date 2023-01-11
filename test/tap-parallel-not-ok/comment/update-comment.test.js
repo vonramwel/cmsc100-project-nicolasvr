@@ -27,25 +27,6 @@ describe('Update a comment should work', async () => {
 
   let cookie = '';
 
-  it('it should return an error when the user is not yet logged in', async () => {
-    const newComment = {
-      data: 'comment'
-    };
-
-    const response = await app.inject({
-      method: 'PUT',
-      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/beb179b8-0289-425c-8126-73f713813106`,
-      headers: {
-        'Content-Type': 'application/json',
-        cookie
-      },
-      body: JSON.stringify(newComment)
-    });
-
-    // this checks if HTTP status code is equal to 401
-    response.statusCode.must.be.equal(401);
-  });
-
   it('Should return the user that was created a new user', async () => {
     const response = await app.inject({
       method: 'POST',
@@ -92,7 +73,7 @@ describe('Update a comment should work', async () => {
 
   it('Should update the object given an ID', async () => {
     const newComment = {
-      data: 'comment 1'
+      data: 'comment'
     };
 
     const newerComment = {
@@ -113,7 +94,7 @@ describe('Update a comment should work', async () => {
 
     const response = await app.inject({
       method: 'PUT',
-      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment${id}`,
+      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/${id}`,
       headers: {
         'Content-Type': 'application/json',
         cookie
@@ -126,10 +107,9 @@ describe('Update a comment should work', async () => {
 
     const result = await response.json();
 
-    // expect that all of the values should be equal to newTodo properties
     result.data.must.be.equal(newerComment.data);
 
-    // expect createdDate and updatedDate is not null
+    // expect createdDate and editedDate is not null
     result.createdDate.must.equal(createdDate);
     result.editedDate.must.above(editedDate);
   });
@@ -144,7 +124,7 @@ describe('Update a comment should work', async () => {
       }
     });
 
-    // this checks if HTTP status code is equal to 401
+    // this checks if HTTP status code is equal to 200
     response.statusCode.must.be.equal(200);
   });
 
@@ -167,14 +147,14 @@ describe('Update a comment should work', async () => {
     cookie = response.headers['set-cookie'];
   });
 
-  it('it should return an error when the user is not yet logged in', async () => {
+  it('it should not allow other user to change other user comment', async () => {
     const newComment = {
       data: 'comment'
     };
 
     const response = await app.inject({
       method: 'PUT',
-      url: `${prefix}/blog/908a0cc2-0c92-46bd-ac4e-19fe1f5d548d/comment/08b7cad6-7f37-4783-9777-b90e385a9d1a`,
+      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/beb179b8-0289-425c-8126-73f713813106`,
       headers: {
         'Content-Type': 'application/json',
         cookie

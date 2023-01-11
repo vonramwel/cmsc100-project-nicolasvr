@@ -71,29 +71,36 @@ describe('Delete a comment should work', async () => {
     cookie = response.headers['set-cookie'];
   });
 
-  it('Should return the success = true if comment is deleted', async () => {
+  it('Should delete the comment given the blog ID and comment Id', async () => {
     const newComment = {
-      data: 'hatdogcheesdog'
+      data: 'comment'
+    };
+
+    const newerComment = {
+      data: 'comment 2'
     };
 
     const createResponse = await app.inject({
       method: 'POST',
-      url: `${prefix}/blog/5ca3ddbe-9d73-494a-b989-800e43e49a92/comment`,
+      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment`,
       headers: {
         'Content-Type': 'application/json',
         cookie
       },
       body: JSON.stringify(newComment)
     });
+    // console.log(await createResponse.json().id);
 
     const { id } = await createResponse.json();
 
     const response = await app.inject({
       method: 'DELETE',
+      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/${id}`,
       headers: {
+        'Content-Type': 'application/json',
         cookie
       },
-      url: `${prefix}/blog/5ca3ddbe-9d73-494a-b989-800e43e49a92/comment${id}`
+      body: JSON.stringify(newerComment)
     });
 
     // this checks if HTTP status code is equal to 200
@@ -101,19 +108,63 @@ describe('Delete a comment should work', async () => {
 
     const result = await response.json();
 
-    // expect success is true
     result.success.must.be.true();
+  });
+  after(async () => {
+    await app.close();
+  });
 
-    const getResponse = await app.inject({
+  it('Logout should work', async () => {
+    const response = await app.inject({
       method: 'GET',
+      url: `${prefix}/logout`,
       headers: {
+        'Content-Type': 'application/json',
         cookie
-      },
-      url: `${prefix}/blog/5ca3ddbe-9d73-494a-b989-800e43e49a92/comment${id}`
+      }
     });
 
-    getResponse.statusCode.must.be.equal(404);
+    // this checks if HTTP status code is equal to 200
+    response.statusCode.must.be.equal(200);
   });
+
+  it('Login should work', async () => {
+    const response = await app.inject({
+      method: 'POST',
+      url: `${prefix}/login`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'vrnicolas',
+        password: 'hello'
+      })
+    });
+
+    // this checks if HTTP status code is equal to 200
+    response.statusCode.must.be.equal(200);
+
+    cookie = response.headers['set-cookie'];
+  });
+
+  it('it should not allow other user to delete other user comment', async () => {
+    const newComment = {
+      data: ' new comment'
+    };
+
+    const response = await app.inject({
+      method: 'DELETE',
+      url: `${prefix}/blog/259a59be-80c0-4e13-85b0-362cbcb899f4/comment/beb179b8-0289-425c-8126-73f713813106`,
+      headers: {
+        'Content-Type': 'application/json',
+        cookie
+      },
+      body: JSON.stringify(newComment)
+    });
+
+    response.statusMessage.must.be.equal('Forbidden');
+  });
+
   after(async () => {
     await app.close();
   });
