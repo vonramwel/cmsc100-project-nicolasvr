@@ -15,6 +15,9 @@ class Page extends LitPage {
   @property({ type: String })
   errorMessage = ''
 
+  @property({ type: Boolean })
+  edit = false;
+
   render () {
     return template.bind(this)();
   }
@@ -39,11 +42,42 @@ class Page extends LitPage {
         return this.setErrorMessage(await response.json(), response.status);
       } else {
         this.blog = await response.json();
+        this.comments = this.blog.comments;
       }
     } catch (error) {
       return this.setErrorMessage(error, 404);
     }
   }
+
+  async editBlog (event) {
+   event.preventDefault();
+   this.edit = true;
+
+  }
+
+  async deleteBlog (event) {
+    event.preventDefault();
+    // we get the data from the detail being sent by the todo-component
+    const { detail } = event;
+    const response = await window.fetch(`/api/blog/${this.blog.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(detail)
+    });
+    try {
+      if (response.status !== 200) {
+        return this.setErrorMessage(await response.json(), response.status);
+      } else {
+        this.blog = await response.json();
+       changeUrl('/blogs');
+      }
+    } catch (error) {
+      return this.setErrorMessage(error, 404);
+    }
+  }
+
 
   async updateBlog (event) {
     event.preventDefault();
@@ -58,15 +92,40 @@ class Page extends LitPage {
     });
     try {
       if (response.status !== 200) {
+      //  this.willEdit = false;
         return this.setErrorMessage(await response.json(), response.status);
       } else {
         this.blog = await response.json();
-        changeUrl('/blogs');
+       //changeUrl('/blogs');
       }
     } catch (error) {
       return this.setErrorMessage(error, 404);
     }
   }
+
+  // async addComment (event) {
+  //   event.preventDefault();
+  //   // we get the data from the detail being sent by the todo-component
+  //   const { detail } = event;
+  //   const response = await window.fetch('/api/blog${detail.id}/comment', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({data: detail.data})
+  //   });
+  //   try {
+  //     const comment = await response.json();
+  //     // appends the new object
+  //     this.blogs = [
+  //       comment,
+  //       ...this.comments
+  //     ];
+  //   } catch (error) {
+  //     return this.setErrorMessage(error, 404);
+  //   }
+  // }
+
 
   async setErrorMessage (data, status) {
     const { message, error } = data;
